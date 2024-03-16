@@ -25,9 +25,9 @@ const {routerUser} = require('./routes/users');
 const {routerPublication} = require('./routes/publications'); 
 const {routerFollow} = require('./routes/follows'); 
 
-app.use('/api/v1',routerUser); 
-app.use('/api/v1',routerPublication); 
-app.use('/api/v1',routerFollow); 
+app.use('/api/v1/user',routerUser); 
+app.use('/api/v1/publication',routerPublication); 
+app.use('/api/v1/follow',routerFollow); 
 
 
 // Listen;
