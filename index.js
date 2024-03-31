@@ -1,36 +1,35 @@
-// BD connect; 
-const {connection} = require('./databases/connect');
-connection(); 
+// BD connect;
+const { connection } = require("./databases/connect");
+connection();
 
 // Servidor node;
-const express = require('express'); 
-const app = express(); 
-const port = 3900; 
+const express = require("express");
+const app = express();
+const port = 3900;
 
-// CorsConfig; 
-const cors = require('cors'); 
-app.use(cors()); 
+// CorsConfig;
+const cors = require("cors");
+app.use(cors());
 
 // JSONConvert;
-app.use(express.json()); 
-app.use(express.urlencoded({extended: true})); 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Routes;
-app.get('/welcome',(req,res)=>{
-    console.log('Hello world from NodeJS'); 
-}); 
+app.get("/welcome", (req, res) => {
+  console.log("Hello world from NodeJS");
+});
 
-    // General; 
-const {routerUser} = require('./routes/users'); 
-const {routerPublication} = require('./routes/publications'); 
-const {routerFollow} = require('./routes/follows'); 
+// General;
+const { routerUser } = require("./routes/users");
+const { routerPublication } = require("./routes/publications");
+const { routerFollow } = require("./routes/follows");
 
-app.use('/api/v1/user',routerUser); 
-app.use('/api/v1/publication',routerPublication); 
-app.use('/api/v1/follow',routerFollow); 
-
+app.use("/api/v1/user", routerUser);
+app.use("/api/v1/publication", routerPublication);
+app.use("/api/v1/follow", routerFollow);
 
 // Listen;
-app.listen(port,()=>{
-    console.log('API Started'); 
-}); 
+app.listen(port, () => {
+  console.log("API Started");
+});

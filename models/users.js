@@ -10,6 +10,7 @@ const userSchema = Schema({
         type: String,
         required: true
     }, 
+    bio: String,
     email: {
         type: String, 
         required: true
