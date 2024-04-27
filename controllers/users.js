@@ -6,6 +6,7 @@ const { loginValidate } = require("../helpers/login/loginValidate");
 const mongoosePagination = require("mongoose-pagination");
 const fs = require("fs");
 const path = require("path");
+const Follow = require("../models/follow");
 
 // Services;
 const { generateToken } = require("../auth/authGuard");
@@ -43,8 +44,8 @@ const register = async (req, res) => {
       message: "Ocurrió un error en la consulta de validación",
     });
   } else if (query && query.length >= 1) {
-    return res.status(200).json({
-      status: "Success",
+    return res.status(409).json({
+      status: "Error",
       message: "El usuario ya está registrado",
     });
   } else {
@@ -124,6 +125,8 @@ const login = async (req, res) => {
 };
 
 const profile = async (req, res) => {
+  const userAuth = req.user;
+  const auth = await User.findOne({ email: userAuth.email });
   // Recibir el parametro del id de usuario por la url;
   const idUser = req.params.id;
 
@@ -139,10 +142,16 @@ const profile = async (req, res) => {
     });
   }
 
+  // Validar el seguimiento;
+  const following = await Follow.findOne({ user: auth._id, followed: idUser })
+  const follower = await Follow.findOne({ user: idUser, followed: auth._id })
+
   // Devolver el resultado;
   return res.status(200).json({
     status: "Success",
     userProfile,
+    following,
+    follower, 
   });
 };
 
@@ -162,6 +171,8 @@ const listUsers = async (req, res) => {
       message: "No existen usuarios disponibles",
     });
   }
+
+  // const followers = await Follow
 
   return res.status(200).json({
     status: "Success",
@@ -202,6 +213,8 @@ const update = async (req, res) => {
   // Cifrar el password;
   if (userUpdate.password) {
     userUpdate.password = await bcrypt.hash(userUpdate.password, 10);
+  }else{
+    delete userUpdate.password;
   }
 
   // Actualizar;

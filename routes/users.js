@@ -3,7 +3,7 @@ const routerUser = express.Router();
 const {authentication} = require('../auth/middlewares/authMiddleware'); 
 const multer = require('multer'); 
 
-// Routes Imports;
+// Routes Imports; 
 const { prueba, register, login, profile,  listUsers, update, uploads, showAvatar} = require("../controllers/users");
 
 // Private routes; 
