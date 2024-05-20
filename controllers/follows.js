@@ -1,4 +1,5 @@
 const Follow = require("../models/follow");
+const Publication = require("../models/publication");
 const User = require("../models/users");
 const Paginate = require("mongoose-pagination");
 
@@ -89,14 +90,16 @@ const followers = async (req, res) => {
   const totalFollowing = await Follow.find({user: user._id});
   const following = await Follow.find({ user: user._id })
     .sort("_id")
-    .populate("user followed", "-_id -password -role -__v -email") // El populate sirve para hacer como un join con la tabla y mostrar los datos de ese documento;
+    .populate("user followed", "-password -role -__v -email") // El populate sirve para hacer como un join con la tabla y mostrar los datos de ese documento;
     .paginate(page, itemsPage);
 
   const totalFollowers = await Follow.find({ followed: user._id }); 
   const followers = await Follow.find({ followed: user._id })
     .sort("_id")
-    .populate("user followed", "-_id -password -role -__v -email") // El populate sirve para hacer como un join con la tabla y mostrar los datos de ese documento;
+    .populate("user followed", "-password -role -__v -email") // El populate sirve para hacer como un join con la tabla y mostrar los datos de ese documento;
     .paginate(page, itemsPage);
+
+  const totalPublications = await Publication.find({user: user._id});
 
   // Devolver los datos;
   return res.status(200).json({
@@ -104,6 +107,7 @@ const followers = async (req, res) => {
     message: "Lista de seguidos",
     totalFollowers: totalFollowers.length,
     totalFollowings: totalFollowing.length,
+    totalPublications: totalPublications.length, 
     pages: Math.ceil(totalFollowing.length / itemsPage),
     followers,
     following,

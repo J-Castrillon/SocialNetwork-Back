@@ -28,12 +28,12 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage });
-routerPublication.put(
+routerPublication.post(
   "/upload/:id",
   [authentication, upload.single("file0")],
   uploads
 );
-routerPublication.get("/viewFile/:id", authentication, showFile);
+routerPublication.get("/viewFile/:id", showFile);
 routerPublication.get('/feed/', authentication, feed); 
 
 // Rutas publicas;

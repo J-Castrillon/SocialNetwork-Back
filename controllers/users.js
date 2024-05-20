@@ -117,12 +117,16 @@ const login = async (req, res) => {
     user: {
       id: exist._id,
       name: exist.name,
+      lastName: exist.lastName,
       nickName: exist.nickName,
       role: exist.role,
+      image: exist.image,
+      bio: exist.bio, 
     },
     token,
   });
 };
+
 
 const profile = async (req, res) => {
   const userAuth = req.user;
@@ -166,7 +170,7 @@ const listUsers = async (req, res) => {
 
   // Devolver el resultado;
   if (!list) {
-    return res.status(404).json({
+    return res.status(404).json({ 
       status: "Error",
       message: "No existen usuarios disponibles",
     });
@@ -225,8 +229,7 @@ const update = async (req, res) => {
 
     return res.status(200).json({
       status: "Success",
-      message: "Estamos en el update",
-      send,
+      user: send,
     });
   } catch (error) {
     if (!send) {
@@ -248,7 +251,7 @@ const uploads = async (req, res) => {
       status: "Error",
       message: "No se envio ningun archivo",
     });
-  }
+  } 
 
   // Datos del archivo;
   const file = req.file.filename;

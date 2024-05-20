@@ -144,7 +144,7 @@ const uploads = async (req, res) => {
       message: "No hay archivos para almacenar",
     });
   }
-
+  
   // Datos del archivo;
   const file = req.file.filename;
 

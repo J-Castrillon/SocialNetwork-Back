@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage}); 
 routerUser.post("/uploads/:id", [authentication, upload.single("file0")], uploads); 
 
-routerUser.get("/avatar/:fichero", authentication, showAvatar); 
+routerUser.get("/avatar/:fichero", showAvatar); 
 
 // Public routes; 
 routerUser.post("/register", register);
